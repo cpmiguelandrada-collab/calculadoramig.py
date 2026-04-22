@@ -31,7 +31,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("🏦 Calculadora de Cheques Profesional")
+st.title("🏦 Calculadora de Cheques -  C.P. Miguel Andrada")
 
 # --- CONFIGURACIÓN EN SIDEBAR ---
 with st.sidebar:
