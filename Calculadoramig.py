@@ -5,7 +5,7 @@ from datetime import date
 # Configuración visual
 st.set_page_config(page_title="Calculadora Bancaria - C.P. Miguel Andrada", layout="wide")
 
-# --- ESTILO CSS PARA LA FIRMA ---
+# --- ESTILO CSS PARA LA FIRMA (AHORA A LA IZQUIERDA) ---
 st.markdown(
     """
     <style>
@@ -16,8 +16,8 @@ st.markdown(
         width: 100%;
         background-color: white;
         color: #555555;
-        text-align: right;
-        padding: 10px 20px;
+        text-align: left; /* Cambiado a la izquierda */
+        padding: 10px 25px;
         font-weight: bold;
         font-size: 14px;
         border-top: 1px solid #e6e6e6;
@@ -56,8 +56,7 @@ with col1:
     monto_input = st.number_input("Monto de referencia ($)", min_value=0.0, value=5000000.0, step=10000.0)
 
 with col2:
-    # Ajustado a la fecha de tu imagen para pruebas
-    f_hoy = st.date_input("Fecha de Negociación", date(2026, 4, 22))
+    f_hoy = st.date_input("Fecha de Negociación", date.today())
     f_pago = st.date_input("Fecha de Pago (Vencimiento)", date(2026, 5, 31))
 
 dias_plazo = (f_pago - f_hoy).days
@@ -84,7 +83,6 @@ else:
         v_neto = v_nominal - intereses - iva - perc
     else:
         v_neto = monto_input
-        # Nominal = Neto / (1 - (Tasa_Periodo * (1 + Impuestos)))
         v_nominal = v_neto / (1 - (t_p * (1 + impuestos_factor)))
         intereses = v_nominal * t_p
         iva = intereses * (iva_pct / 100)
@@ -103,7 +101,5 @@ else:
         "Monto": [v_nominal, -intereses, -iva, -perc, v_neto]
     })
     
-    # Formatear tabla
     st.table(detalle.style.format({"Monto": "$ {:,.2f}"}))
-    
     st.info(f"Cálculo realizado con base de {base_dias} días anuales para un plazo de {dias_plazo} días.")
